@@ -1,21 +1,14 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 import Anecdote from './Anecdote';
 
-const Anecdotes = ({ store }) => {
-    const { anecdotes, filter } = store.getState();
-
-    const filteredAnecdotes = filter
-        ? anecdotes.filter(anecdote =>
-              anecdote.content.toLowerCase().includes(filter.toLowerCase())
-          )
-        : anecdotes;
-
+const Anecdotes = ({ anecdotes }) => {
     return (
         <div>
-            {filteredAnecdotes.map(anecdote => (
+            {anecdotes.map(anecdote => (
                 <Anecdote
-                    store={store}
                     key={anecdote.id}
                     content={anecdote.content}
                     id={anecdote.id}
@@ -26,4 +19,16 @@ const Anecdotes = ({ store }) => {
     );
 };
 
-export default Anecdotes;
+const filterAnecdotes = ({ anecdotes, filter }) =>
+    filter
+        ? anecdotes.filter(anecdote =>
+              anecdote.content.toLowerCase().includes(filter.toLowerCase())
+          )
+        : anecdotes;
+
+const mapStateToProps = state => ({
+    anecdotes: filterAnecdotes(state),
+    filter: state.filter
+});
+
+export default connect(mapStateToProps)(Anecdotes);

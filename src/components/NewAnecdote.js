@@ -1,16 +1,18 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 import { newAnecdote } from '../reducers/anecdoteReducer';
 import { setNotification } from '../reducers/notificationReducer';
 
-const NewAnecdote = ({ store }) => {
+const NewAnecdote = ({ newAnecdote, setNotification }) => {
     const handleNewAnecdote = e => {
         e.preventDefault();
 
         const anecdote = e.target.newAnecdote.value;
 
-        store.dispatch(newAnecdote(anecdote));
-        store.dispatch(setNotification(`You added ${anecdote}`));
+        newAnecdote(anecdote);
+        setNotification(`You added ${anecdote}`);
 
         e.target.newAnecdote.value = '';
     };
@@ -28,4 +30,9 @@ const NewAnecdote = ({ store }) => {
     );
 };
 
-export default NewAnecdote;
+const mapDispatchToProps = {
+    newAnecdote,
+    setNotification
+};
+
+export default connect(null, mapDispatchToProps)(NewAnecdote);

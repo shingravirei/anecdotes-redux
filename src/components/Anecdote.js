@@ -1,9 +1,18 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 import { vote, sortAnecdotes } from '../reducers/anecdoteReducer';
 import { setNotification } from '../reducers/notificationReducer';
 
-const Anecdote = ({ content, votes, id, store }) => {
+const Anecdote = ({
+    content,
+    votes,
+    id,
+    vote,
+    sortAnecdotes,
+    setNotification
+}) => {
     return (
         <div>
             <div>{content}</div>
@@ -11,11 +20,9 @@ const Anecdote = ({ content, votes, id, store }) => {
                 has {votes}
                 <button
                     onClick={() => {
-                        store.dispatch(vote(id));
-                        store.dispatch(sortAnecdotes());
-                        store.dispatch(
-                            setNotification(`You voted for ${content}`)
-                        );
+                        vote(id);
+                        sortAnecdotes();
+                        setNotification(`You voted for ${content}`);
                     }}
                 >
                     vote
@@ -25,4 +32,10 @@ const Anecdote = ({ content, votes, id, store }) => {
     );
 };
 
-export default Anecdote;
+const mapDispatchToProps = {
+    vote,
+    sortAnecdotes,
+    setNotification
+};
+
+export default connect(null, mapDispatchToProps)(Anecdote);
