@@ -1,11 +1,17 @@
 import React from 'react';
 
 import { newAnecdote } from '../reducers/anecdoteReducer';
+import { setNotification } from '../reducers/notificationReducer';
 
 const NewAnecdote = ({ store }) => {
     const handleNewAnecdote = e => {
         e.preventDefault();
-        store.dispatch(newAnecdote(e.target.newAnecdote.value));
+
+        const anecdote = e.target.newAnecdote.value;
+
+        store.dispatch(newAnecdote(anecdote));
+        store.dispatch(setNotification(`You added ${anecdote}`));
+
         e.target.newAnecdote.value = '';
     };
 

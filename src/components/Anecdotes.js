@@ -3,12 +3,17 @@ import React from 'react';
 import Anecdote from './Anecdote';
 
 const Anecdotes = ({ store }) => {
-    const anecdotes = store.getState();
+    const { anecdotes, filter } = store.getState();
+
+    const filteredAnecdotes = filter
+        ? anecdotes.filter(anecdote =>
+              anecdote.content.toLowerCase().includes(filter.toLowerCase())
+          )
+        : anecdotes;
 
     return (
         <div>
-            <h2>Anecdotes</h2>
-            {anecdotes.map(anecdote => (
+            {filteredAnecdotes.map(anecdote => (
                 <Anecdote
                     store={store}
                     key={anecdote.id}
