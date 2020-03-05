@@ -8,12 +8,7 @@ const Anecdotes = ({ anecdotes }) => {
     return (
         <div>
             {anecdotes.map(anecdote => (
-                <Anecdote
-                    key={anecdote.id}
-                    content={anecdote.content}
-                    id={anecdote.id}
-                    votes={anecdote.votes}
-                />
+                <Anecdote key={anecdote.id} {...anecdote} />
             ))}
         </div>
     );
@@ -27,8 +22,7 @@ const filterAnecdotes = ({ anecdotes, filter }) =>
         : anecdotes;
 
 const mapStateToProps = state => ({
-    anecdotes: filterAnecdotes(state),
-    filter: state.filter
+    anecdotes: filterAnecdotes(state)
 });
 
 export default connect(mapStateToProps)(Anecdotes);
