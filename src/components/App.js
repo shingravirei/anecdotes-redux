@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 
-import { initAnecdotes } from '../redux/reducers/anecdoteReducer';
+import {
+    initAnecdotes,
+    sortAnecdotes
+} from '../redux/reducers/anecdoteReducer';
 
 import Notification from './Notification';
 import Anecdotes from './Anecdotes';
 import NewAnecdote from './NewAnecdote';
 import Filter from './Filter';
 
-const App = ({ notification, initAnecdotes }) => {
+const App = ({ notification, initAnecdotes, sortAnecdotes }) => {
     const [firstTime, setFirstTime] = useState(true);
 
     useEffect(() => {
@@ -18,6 +21,12 @@ const App = ({ notification, initAnecdotes }) => {
             setFirstTime(!firstTime);
         }
     }, [initAnecdotes, firstTime]);
+
+    useEffect(() => {
+        if (!firstTime) {
+            sortAnecdotes();
+        }
+    }, [firstTime, sortAnecdotes]);
 
     return (
         <div>
@@ -37,7 +46,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    initAnecdotes
+    initAnecdotes,
+    sortAnecdotes
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
