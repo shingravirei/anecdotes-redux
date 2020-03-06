@@ -2,8 +2,8 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { vote, sortAnecdotes } from '../reducers/anecdoteReducer';
-import { setNotification } from '../reducers/notificationReducer';
+import { vote, sortAnecdotes } from '../redux/reducers/anecdoteReducer';
+import { setNotification } from '../redux/reducers/notificationReducer';
 
 const Anecdote = ({
     content,
@@ -20,9 +20,9 @@ const Anecdote = ({
                 has {votes}
                 <button
                     onClick={() => {
-                        vote(id);
+                        vote({ id, votes, content });
                         sortAnecdotes();
-                        setNotification(`You voted for ${content}`);
+                        setNotification(`You voted for ${content}`, 5);
                     }}
                 >
                     vote

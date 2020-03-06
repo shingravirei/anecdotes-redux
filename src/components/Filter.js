@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { setFilter, resetFilter } from '../reducers/filterReducer';
+import { setFilter, resetFilter } from '../redux/reducers/filterReducer';
 
 const Filter = ({ filter, setFilter, resetFilter }) => {
     const handleChange = e => {

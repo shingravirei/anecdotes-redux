@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
+
+import { initAnecdotes } from '../redux/reducers/anecdoteReducer';
 
 import Notification from './Notification';
 import Anecdotes from './Anecdotes';
 import NewAnecdote from './NewAnecdote';
 import Filter from './Filter';
 
-import { resetNotification } from '../reducers/notificationReducer';
+const App = ({ notification, initAnecdotes }) => {
+    const [firstTime, setFirstTime] = useState(true);
 
-const App = ({ notification, resetNotification }) => {
     useEffect(() => {
-        if (notification) {
-            setTimeout(() => {
-                resetNotification();
-            }, 5000);
+        if (firstTime) {
+            initAnecdotes();
+            setFirstTime(!firstTime);
         }
-    }, [notification, resetNotification]);
+    }, [initAnecdotes, firstTime]);
 
     return (
         <div>
@@ -36,7 +37,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    resetNotification
+    initAnecdotes
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

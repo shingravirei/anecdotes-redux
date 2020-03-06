@@ -2,19 +2,20 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { newAnecdote } from '../reducers/anecdoteReducer';
-import { setNotification } from '../reducers/notificationReducer';
+import { newAnecdote } from '../redux/reducers/anecdoteReducer';
+import { setNotification } from '../redux/reducers/notificationReducer';
 
 const NewAnecdote = ({ newAnecdote, setNotification }) => {
-    const handleNewAnecdote = e => {
+    const handleNewAnecdote = async e => {
         e.preventDefault();
 
         const anecdote = e.target.newAnecdote.value;
 
-        newAnecdote(anecdote);
-        setNotification(`You added ${anecdote}`);
-
         e.target.newAnecdote.value = '';
+
+        newAnecdote(anecdote);
+
+        setNotification(`You added ${anecdote}`, 5);
     };
 
     return (
